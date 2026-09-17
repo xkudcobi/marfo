@@ -1890,3 +1890,57 @@ kbd {
   padding: 16px;
 }
 
+
+/* ─── PHONE ─────────────────────────────────────────────────── */
+/* Below 900px the fixed three column desk becomes one scrolling column:
+   sticky header, sequencer, then the mixer side and the MIDI side. Step
+   rows wrap into eight per line so a 16 step pattern is two rows of
+   finger sized pads instead of a strip that scrolls sideways. */
+@media (max-width: 900px) {
+  html, body { height: auto; overflow: visible; }
+
+  .app-header {
+    position: sticky; top: 0;
+    height: auto; min-height: 0;
+    flex-wrap: wrap; gap: 8px 12px;
+    padding: 8px 10px;
+  }
+  .logo { order: 0; }
+  .header-right { order: 1; margin-left: auto; flex: 0 1 auto; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+  .transport { order: 2; flex: 1 1 100%; flex-wrap: wrap; gap: 8px; }
+  .midi-status, .transport-clock, .logo-version, .logo-text, .slots-label, .help-btn { display: none; }
+  .header-right .icon-btn { padding: 4px 7px; }
+  /* two rows: play / steps / audio, then tempo / swing / volume */
+  .btn-transport { width: 34px; }
+  .audio-controls-block { display: contents; }
+  .step-count-block { order: 1; }
+  .audio-toggle { order: 2; }
+  .bpm-block { order: 3; }
+  .swing-block { order: 4; }
+  .master-vol-block { order: 5; }
+  .swing-block input[type=range] { width: 50px; }
+  .master-vol-block #master-vol { width: 48px; }
+  .bpm-arrows, .master-vol-block label { display: none; }
+
+  .app-main {
+    position: static;
+    display: flex; flex-direction: column;
+    overflow: visible;
+  }
+  .sequencer-area { order: 0; overflow: visible; padding: 10px; }
+  .sidebar-right { order: 1; border-left: 0; border-top: 1px solid var(--border-subtle); overflow: visible; }
+  .sidebar-left { order: 2; border-right: 0; border-top: 1px solid var(--border-subtle); overflow: visible; }
+
+  .step-indicator-row { display: none; }
+  .track-list { overflow: visible; gap: 8px; }
+  .track-row { flex-wrap: wrap; gap: 8px; padding: 8px; }
+  .track-header { width: 100%; }
+  .steps-grid {
+    width: 100%; flex: none;
+    display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px;
+  }
+  .step-btn { width: auto; height: auto; aspect-ratio: 1; flex: none; }
+  .step-btn:nth-child(8n+1) { margin-left: 0; }
+
+  .modal-box { min-width: 0; width: calc(100vw - 32px); max-width: 540px; padding: 18px; }
+}
