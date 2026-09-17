@@ -297,3 +297,72 @@ select {
   opacity: 0; pointer-events: none; transition: opacity 0.2s ease; z-index: 100;
 }
 .toast.show { opacity: 1; }
+
+/* ------------------------------------------------------------------ phone */
+/* Below 760px the page scrolls as one column: topbar, glyph editor, specimen
+   and character set, with the control bar pinned to the bottom and folded
+   down to one row until it is opened. */
+@media (max-width: 760px) {
+  html, body { height: auto; overflow: visible; }
+  #app { height: auto; min-height: 100vh; min-height: 100dvh; width: 100%; }
+
+  .topbar { height: auto; min-height: 0; flex-wrap: wrap; gap: 8px 10px; padding: 10px 12px; }
+  .topbar-divider, .topbar-meta { display: none; }
+  .fontname-input { min-width: 0; flex: 1 1 120px; }
+  .topbar .text-btn { padding: 7px 9px; }
+
+  .workspace { flex-direction: column; overflow: visible; }
+  .editor-panel {
+    width: 100%; min-width: 0; overflow: visible;
+    border-right: 0; border-bottom: 1px solid var(--line);
+    padding: 12px; gap: 10px;
+  }
+  .editor-canvas-wrap { max-width: 360px; width: 100%; margin: 0 auto; }
+  .editor-hint { display: none; }
+  .node-field { width: calc(33.333% - 4px); }
+  .node-inspector .mini-btn { min-width: 0; }
+
+  .specimen-panel { overflow: visible; }
+  .specimen-scroll { overflow: visible; }
+  .tester-head { padding: 10px 12px; gap: 8px 12px; }
+  .tester-ctrl input[type=range] { width: 64px; }
+  .tester-body { padding: 16px 12px 0; }
+  .add-block-row { padding: 16px 12px 24px; }
+  .glyphset { padding: 20px 12px 40px; }
+  .glyph-cell { padding: 3px; }
+
+  .control-bar {
+    position: sticky; bottom: 0; z-index: 20;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px 12px;
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.6);
+  }
+  .control-bar > * { min-width: 0; }
+  .slider-group { width: auto; }
+  .control-divider, .control-spacer { display: none; }
+  .edit-mode-group, .export-group { grid-column: 1 / -1; }
+  .edit-toggle-row { display: grid; grid-template-columns: 1fr 1fr; }
+  select { min-width: 0; width: 100%; }
+  .text-btn.reseed { min-width: 0; width: 100%; }
+  .export-group { display: flex; }
+  .export-btn { flex: 1; padding: 11px 6px; }
+
+  /* fold: only the toggle row shows until opened */
+  .control-fold {
+    grid-column: 1 / -1; order: -1;
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--fg);
+    background: transparent; border: 0; padding: 2px 0; cursor: pointer;
+  }
+  .control-fold::after { content: '\25B4'; color: var(--accent); }
+  .control-bar.folded .control-fold::after { content: '\25BE'; }
+  .control-bar.folded > *:not(.control-fold) { display: none; }
+}
+@media (min-width: 761px) {
+  .control-fold { display: none; }
+}
+@media (max-width: 760px) {
+  /* a long word at display size scrolls inside its block, not the page */
+  .tester-body { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}

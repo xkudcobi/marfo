@@ -227,9 +227,25 @@
 
 .export-scale-select { min-width: 64px; }
 
+/* Below 900px the page scrolls as one column. The stage stays pinned at the
+   top so the poster is visible while the controls below it are worked. */
 @media (max-width: 900px) {
-  .poster-sidebar { width: 100%; min-width: 0; }
-  .poster-workspace { flex-direction: column; }
+  html, body { height: auto; overflow: visible; }
+  #app { height: auto; min-height: 100vh; min-height: 100dvh; width: 100%; }
+  .topbar { height: auto; min-height: 0; flex-wrap: wrap; gap: 8px 10px; padding: 10px 12px; }
+  .topbar-divider { display: none; }
+  .poster-workspace { flex-direction: column; overflow: visible; }
+  .poster-stage {
+    order: -1; position: sticky; top: 0; z-index: 20;
+    height: 58vh; height: 58dvh; min-height: 300px;
+    border-bottom: 1px solid var(--line);
+  }
+  .stage-bar { height: auto; min-height: 0; flex-wrap: wrap; gap: 6px 10px; padding: 6px 10px; }
+  .stage-meta { flex: 1 1 100%; }
+  .zoom-cluster input[type=range] { width: 70px; }
+  .stage-scroll { padding: 12px; }
+  .stage-hint { display: none; }
+  .poster-sidebar { width: 100%; min-width: 0; border-right: 0; overflow: visible; padding: 14px 12px 40px; }
 }
 
 .field-label {

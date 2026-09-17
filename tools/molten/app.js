@@ -116,6 +116,10 @@
       { id: ++uid, text: "IN A CULTURE LIKE OURS, LONG ACCUSTOMED TO SPLITTING AND DIVIDING ALL THINGS AS A MEANS OF CONTROL, IT IS SOMETIMES A BIT OF A SHOCK TO BE REMINDED THAT, IN OPERATIONAL AND PRACTICAL FACT, THE MEDIUM IS THE MESSAGE.", size: 22, lh: 140, tr: 0.02, paper: false, editing: false },
     ],
   }, PRESETS.liquid);
+  // a phone is roughly a third as wide, so the specimen starts smaller there
+  if (window.matchMedia('(max-width: 760px)').matches) {
+    state.blocks.forEach(function (b) { b.size = Math.round(b.size * 0.45); });
+  }
 
   var $ = function (id) { return document.getElementById(id); };
   var defsInner = $('glyphDefsInner');
@@ -316,7 +320,13 @@
           cell.dataset.letter = L;
           cell.style.color = state.ink === '#000000' ? '#fff' : state.ink;
           cell.appendChild(glyphSvg(L, 46));
-          cell.addEventListener('click', function () { selectLetter(L); });
+          cell.addEventListener('click', function () {
+            selectLetter(L);
+            // on a phone the editor sits above the character set, bring it back
+            if (window.matchMedia('(max-width: 760px)').matches) {
+              document.querySelector('.editor-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          });
           row.appendChild(cell);
         })(grp[1][i]);
       }
@@ -748,6 +758,16 @@
     });
     dl(new Blob([font.toArrayBuffer()], { type: 'font/otf' }), safeName() + '.otf');
   }
+
+  // ------------------------------------------------- phone control bar fold
+  (function () {
+    var bar = document.querySelector('.control-bar');
+    var fold = document.createElement('button');
+    fold.type = 'button'; fold.className = 'control-fold'; fold.textContent = 'Controls';
+    bar.insertBefore(fold, bar.firstChild);
+    bar.classList.add('folded');
+    fold.addEventListener('click', function () { bar.classList.toggle('folded'); });
+  })();
 
   // -------------------------------------------------------------------- boot
   syncShape();
