@@ -1045,7 +1045,7 @@ function exportPNG(){
       var pUrl = URL.createObjectURL(blob);
       var a = document.createElement('a');
       a.href = pUrl;
-      a.download = 'pattern_' + state.pattern + '_' + state.canvasW + 'x' + state.canvasH + '.png';
+      a.download = 'lattice_' + state.pattern + '_' + state.canvasW + 'x' + state.canvasH + '.png';
       a.click();
       URL.revokeObjectURL(pUrl);
       URL.revokeObjectURL(url);
@@ -3906,7 +3906,7 @@ function syncZoom(){document.getElementById('zoomInput').value=state.zoom;docume
 
 // ── EXPORT
 function getSVG(){return '<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" width="'+state.canvasW+'" height="'+state.canvasH+'" viewBox="0 0 '+state.canvasW+' '+state.canvasH+'">\n'+genPattern()+'\n</svg>';}
-function exportSVG(){var blob=new Blob([getSVG()],{type:'image/svg+xml'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='pattern_'+state.pattern+'_'+state.canvasW+'x'+state.canvasH+'.svg';a.click();URL.revokeObjectURL(url);showToast('\u2713','Exported '+state.canvasW+'x'+state.canvasH+'px SVG');}
+function exportSVG(){var blob=new Blob([getSVG()],{type:'image/svg+xml'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='lattice_'+state.pattern+'_'+state.canvasW+'x'+state.canvasH+'.svg';a.click();URL.revokeObjectURL(url);showToast('\u2713','Exported '+state.canvasW+'x'+state.canvasH+'px SVG');}
 function copyAsSVG(){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(getSVG()).then(function(){showToast('\u2713','SVG copied to clipboard!');});}else{var ta=document.createElement('textarea');ta.value=getSVG();document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('\u2713','Copied!');}}
 
 // ── TOAST

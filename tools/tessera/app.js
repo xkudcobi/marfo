@@ -1275,7 +1275,7 @@ function exportPNG() {
     const link = document.createElement('a');
     const isLogo = (contentTypeSelect.value === 'logo');
     const baseName = isLogo ? 'logo' : (textInput.value.toLowerCase().replace(/[^a-z0-9]/g, '_') || 'empty');
-    link.download = `mosaic_${baseName}_${scale}x.png`;
+    link.download = `tessera_${baseName}_${scale}x.png`;
     link.href = dataURL; link.click();
     showToast(`High-res PNG (${scale}x) exported!`);
 }
@@ -1287,7 +1287,7 @@ function exportSVG() {
     const link = document.createElement('a');
     const isLogo = (contentTypeSelect.value === 'logo');
     const baseName = isLogo ? 'logo' : (textInput.value.toLowerCase().replace(/[^a-z0-9]/g, '_') || 'empty');
-    link.download = `mosaic_${baseName}.svg`;
+    link.download = `tessera_${baseName}.svg`;
     link.href = url; link.click();
     setTimeout(() => URL.revokeObjectURL(url), 100);
     showToast("SVG Vector exported successfully!");

@@ -259,7 +259,7 @@ body.light-theme #panel{background:rgba(240,237,232,0.94);border-color:rgba(0,0,
 
 <!-- ── TOP HUD BAR ── -->
 <div id="hud-bar">
-  <span class="hud-brand">D4R</span>
+  <span class="hud-brand">PULSAR</span>
   <span class="hud-sep"></span>
   <span class="hud-label">MODE</span><span class="hud-value">CHLADNI</span>
   <span class="hud-sep"></span>
@@ -534,7 +534,7 @@ function inertiaToDamp(v){return 0.99-(v-1)/9*0.17;}
 // Pulsar palette — orange-based
 var SINGLE_BASE=[[255,85,0],[255,140,30],[255,200,60],[255,255,255],[220,60,20],[255,100,60],[0,255,136],[255,50,50]];
 var MULTI_PRESETS=[
-  {name:'D4R BURN',colors:[[255,85,0],[255,140,30],[255,200,60],[220,60,20],[255,100,60]],swatch:'linear-gradient(90deg,#FF5500,#ffc83c)'},
+  {name:'PULSAR BURN',colors:[[255,85,0],[255,140,30],[255,200,60],[220,60,20],[255,100,60]],swatch:'linear-gradient(90deg,#FF5500,#ffc83c)'},
   {name:'SCAN GREEN',colors:[[0,255,136],[0,200,100],[100,255,180],[0,255,200],[80,220,160]],swatch:'linear-gradient(90deg,#00ff88,#00c8c8)'},
   {name:'SIGNAL WHITE',colors:[[255,255,255],[200,200,200],[255,220,180],[240,240,240],[180,180,180]],swatch:'linear-gradient(90deg,#fff,#b4b4b4)'},
   {name:'TERMINAL RED',colors:[[255,50,50],[255,100,80],[200,0,0],[255,80,40],[180,20,20]],swatch:'linear-gradient(90deg,#ff3232,#b41414)'},
@@ -850,7 +850,7 @@ function startRecording(){
   mediaRecorder.ondataavailable=function(e){if(e.data.size>0)recChunks.push(e.data);};
   mediaRecorder.onstop=function(){
     updateFrameGuides();
-    var blob=new Blob(recChunks,{type:'video/webm'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='d4r_chladni.webm';a.click();
+    var blob=new Blob(recChunks,{type:'video/webm'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='pulsar_chladni.webm';a.click();
     statusEl.textContent='VIDEO SAVED';recDot.classList.remove('visible');
     var rb=document.getElementById('export-rec');rb.classList.remove('rec-active');rb.innerHTML='<svg style="display:inline;vertical-align:middle;margin-right:3px" width="8" height="8" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.2"/><circle cx="5" cy="5" r="2" fill="currentColor"/></svg>REC';
   };
@@ -861,8 +861,8 @@ function startRecording(){
 function stopRecording(){if(!isRecording)return;clearInterval(recTimer);isRecording=false;mediaRecorder.stop();}
 
 document.getElementById('export-rec').addEventListener('click',function(){if(!isRecording){if(audioMode==='mp3'&&mp3Buffer&&!mp3Playing){mp3RecAuto=true;toggleMp3();}else mp3RecAuto=false;startRecording();}else{mp3RecAuto=false;stopRecording();}});
-document.getElementById('export-png').addEventListener('click',function(){updateFrameGuides(true);var a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download='d4r_chladni.png';a.click();updateFrameGuides();statusEl.textContent='PNG SAVED';});
-document.getElementById('export-svg').addEventListener('click',function(){var parts=['<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+'"><rect width="'+W+'" height="'+H+'" fill="'+bgHex+'"/>'];for(var i=0;i<particles.length;i++){var p=particles[i],c=particleColors[i]||[255,85,0];parts.push('<circle cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="'+P.size+'" fill="rgb('+c+')" opacity="1"/>');}parts.push('</svg>');var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([parts.join('')],{type:'image/svg+xml'}));a.download='d4r_chladni.svg';a.click();statusEl.textContent='SVG SAVED';});
+document.getElementById('export-png').addEventListener('click',function(){updateFrameGuides(true);var a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download='pulsar_chladni.png';a.click();updateFrameGuides();statusEl.textContent='PNG SAVED';});
+document.getElementById('export-svg').addEventListener('click',function(){var parts=['<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+'"><rect width="'+W+'" height="'+H+'" fill="'+bgHex+'"/>'];for(var i=0;i<particles.length;i++){var p=particles[i],c=particleColors[i]||[255,85,0];parts.push('<circle cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="'+P.size+'" fill="rgb('+c+')" opacity="1"/>');}parts.push('</svg>');var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([parts.join('')],{type:'image/svg+xml'}));a.download='pulsar_chladni.svg';a.click();statusEl.textContent='SVG SAVED';});
 
 // ── Slider bindings ───────────────────────────────────────────────────────────
 [['s-gain','v-gain','gain',1],['s-count','v-count','count',0],['s-size','v-size','size',1],['s-inertia','v-inertia','inertia',0],['s-restore','v-restore','restore',2],['s-rmax','v-rmax','rmax',1],['s-mrad','v-mrad','mrad',0],['s-mforce','v-mforce','mforce',1],['s-spread','v-spread','spread',2],['s-eacc','v-eacc','eacc',2],['s-edec','v-edec','edec',3],['s-fsen','v-fsen','fsen',2]].forEach(function(it){

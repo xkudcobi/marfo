@@ -16,7 +16,7 @@
        one. No stored choice means the system preference decides, which the
        stylesheet handles on its own. */
     try {
-      var t = localStorage.getItem('thermal-type-theme');
+      var t = localStorage.getItem('halo-theme');
       if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
     } catch (e) { /* private mode: fall through to the system preference */ }
   </script>
@@ -167,7 +167,7 @@ designed.</textarea></label>
         || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
       var next = current === 'dark' ? 'light' : 'dark';
       root.dataset.theme = next;
-      try { localStorage.setItem('thermal-type-theme', next); } catch (e) { /* not persisted */ }
+      try { localStorage.setItem('halo-theme', next); } catch (e) { /* not persisted */ }
     });
   </script>
   <script type="module" src="src/app.js"></script>

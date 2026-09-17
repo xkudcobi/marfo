@@ -210,13 +210,13 @@ function bindAdvancedToggle() {
   };
 
   let stored = null;
-  try { stored = localStorage.getItem('thermal-type-advanced'); } catch { /* private mode */ }
+  try { stored = localStorage.getItem('halo-advanced'); } catch { /* private mode */ }
   apply(stored === 'on');
 
   button.addEventListener('click', () => {
     const next = document.body.dataset.showAdvanced !== 'on';
     apply(next);
-    try { localStorage.setItem('thermal-type-advanced', next ? 'on' : 'off'); } catch { /* not persisted */ }
+    try { localStorage.setItem('halo-advanced', next ? 'on' : 'off'); } catch { /* not persisted */ }
   });
 }
 

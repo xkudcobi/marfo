@@ -1426,7 +1426,7 @@ function PulsarApp() {
 
                     {/* ── LEFT: Status readouts ─────────────────────── */}
                     <div className="hud-zone hud-zone-left">
-                        <span className="hud-brand">D4R</span>
+                        <span className="hud-brand">PULSAR</span>
                         <span className="hud-sep">│</span>
                         <span className="hud-label">FPS</span>
                         <span className="hud-value">{fps}</span>
