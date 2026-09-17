@@ -248,12 +248,20 @@
     }
   });
 
-  // Try auto-connect MIDI on load
+  // Auto-connect MIDI on load, but only when the browser already granted it.
+  // A fresh visitor gets no permission prompt until they press Connect MIDI.
   (async () => {
-    if (navigator.requestMIDIAccess) {
-      const ok = await MidiManager.requestAccess().catch(() => false);
-      if (ok) UI.renderDevices(MidiManager.getDeviceList());
-    }
+    if (!navigator.requestMIDIAccess) return;
+    let granted = false;
+    try {
+      if (navigator.permissions && navigator.permissions.query) {
+        const status = await navigator.permissions.query({ name: 'midi', sysex: false });
+        granted = status.state === 'granted';
+      }
+    } catch (e) { /* permissions API cannot describe midi here; stay quiet */ }
+    if (!granted) return;
+    const ok = await MidiManager.requestAccess().catch(() => false);
+    if (ok) UI.renderDevices(MidiManager.getDeviceList());
   })();
 
   // ─── MIDI Monitor Clear ───────────────────────────────────────
