@@ -4,7 +4,6 @@ MARFO tools index. A single page linking to live demos of my browser based
 tools, self hosted instead of Linktree.
 
 Static site, no hosting tied to it yet
-Contact **hello@marfo.studio**
 
 ## Structure
 
@@ -49,7 +48,7 @@ rounded cells, everything set in uppercase mono, one red accent dot.
 | `--on-ink` | `#ffffff` | Type on a turned over cell |
 | `--on-ink-soft` | `#b8b8b8` | Body copy on a turned over cell |
 | `--on-ink-hair` | `#3d3d3d` | The `OPEN` rule on a turned over cell |
-| `--red` | `#d71921` | Accent dot on hover and on the contact cell |
+| `--red` | `#d71921` | Accent dot on hover |
 | `--r` | `22px` | Cell radius |
 | `--gap` | `10px` | Grid gap and page padding |
 
@@ -74,7 +73,6 @@ responsive while the colour is still travelling. The red dot fades in at
 | A | Type | 01 to 03 |
 | B | Print & Pattern | 04 to 06 |
 | C | Sound & Visual | 07, 08 |
-| D | Contact | hello@marfo.studio |
 
 Numbering runs `01` to `08` straight through, across categories. Adding a tool
 mid sheet therefore renumbers every card after it, and the two meta

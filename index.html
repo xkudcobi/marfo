@@ -153,13 +153,6 @@ img{display:block;max-width:100%}
   }
 }
 
-/* red dot, as on the reference sheet */
-.rdot{
-  width:16px;height:16px;border-radius:50%;
-  background:var(--red);
-  flex-shrink:0;
-}
-
 /* ---------- SECTION BAR ---------- */
 .bar{
   display:flex;
@@ -229,10 +222,6 @@ img{display:block;max-width:100%}
 .go svg{width:9px;height:9px;flex-shrink:0}
 
 /* ---------- CONTACT ---------- */
-.contact{min-height:auto}
-.contact .cell-body{padding-top:30px}
-.mailto{border-bottom:1px solid var(--ink-faint);transition:border-color .18s ease,color .18s ease}
-.mailto:hover,.mailto:focus-visible{color:var(--red);border-color:var(--red);outline:none}
 
 /* ---------- FOOT ---------- */
 .foot{
@@ -427,27 +416,9 @@ img{display:block;max-width:100%}
 
   </div>
 
-  <!-- ============ CONTACT ============ -->
-  <div class="row">
-    <div class="cell contact">
-      <div class="cell-top">
-        <span class="dot idx">D</span>
-        <span class="rdot"></span>
-      </div>
-      <div class="label" data-tr="İLETİŞİM">CONTACT</div>
-      <div class="cell-body">
-        <div class="meta">
-          <span data-tr="BİR ŞEY Mİ BOZULDU, YA DA BİR ARAÇ FİKRİN Mİ VAR ?">SOMETHING BROKEN, OR AN IDEA FOR A TOOL ?</span><br/>
-          <span data-tr="YAZ :">WRITE TO</span> <a class="mailto" href="mailto:hello@marfo.studio">HELLO@MARFO.STUDIO</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="foot">
     <span>MARFO</span>
     <span data-tr="ARAÇ DİZİNİ V1.0.0">TOOLS INDEX V1.0.0</span>
-    <span>HELLO@MARFO.STUDIO</span>
     <span>2026</span>
   </div>
 
