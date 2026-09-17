@@ -1,125 +1,93 @@
 # MARFO
 
-MARFO tools index. A single page linking to live demos of my browser based
-tools, self hosted instead of Linktree.
+Eight browser based tools for type, pattern, poster and sound work, behind a
+retro desktop home screen. Nothing to install, no accounts, no server.
 
-Static site, no hosting tied to it yet
+Live at https://xkudcobi.github.io/marfo/ via GitHub Pages, served straight
+from `main`. Static files only, no build step.
 
 ## Structure
 
-Two files, no build step, no dependencies. GitHub Pages serves them straight
-from `main`.
-
-| File | Purpose |
+| Path | Purpose |
 | --- | --- |
-| `index.html` | The whole page. Markup, CSS and the one script, in one file. |
-| `logo.svg` | The mark: white square, black circle. Favicon, apple touch icon, OG image. |
-| `tools/` | The tools themselves, one folder each, served from this same site. |
+| `index.html` | The hub. Markup, CSS and the one script, in one file. |
+| `404.html` | Not found page in the same window style. Pages serves it for any missing path. |
+| `logo.svg` | The mark: white square, black circle. Favicon and apple touch icon of the hub. |
+| `og.png` | 1200 x 630 share image for link previews. |
+| `tools/` | The tools themselves, one folder each. Each is self contained. |
+| `tools/NAME/icon.svg` | The tool's desktop icon, also used as that tool's favicon. |
 
-## Bundled tools
+## Tools
 
-Every card links to a folder under `tools/`, so the whole thing ships as one
-static site. Each tool is a self contained page, no build step.
+| Folder | Name | What it does |
+| --- | --- | --- |
+| `tools/kinetik/` | KINETIK | Kinetic type animator. `flash.html` is a second, stroboscopic engine on p5. |
+| `tools/molten/` | MOLTEN | Liquid font generator, exports OTF. `poster.html` sets the font on a poster. |
+| `tools/halo/` | HALO | Melt and halo type. |
+| `tools/tessera/` | TESSERA | Mosaic tile generator. |
+| `tools/lattice/` | LATTICE | Pattern generator. |
+| `tools/ember/` | EMBER | Thermal poster maker, WebGL fluid feedback. |
+| `tools/stepper/` | STEPPER | MIDI step sequencer and sampler. |
+| `tools/pulsar/` | PULSAR | VJ audio visualizer. `chladni.html` and `sander.html` are sub modes it opens in an iframe. |
 
-| Folder | Card |
-| --- | --- |
-| `tools/kinetik/` | 01 Kinetic Type Animator |
-| `tools/molten/` | 02 Liquid Font Generator |
-| `tools/halo/` | 03 Melt and Halo Type |
-| `tools/tessera/` | 04 Mosaic Tile Generator |
-| `tools/lattice/` | 05 Pattern Generator |
-| `tools/ember/` | 06 Thermal Poster Maker |
-| `tools/stepper/` | 07 Step Sequencer |
-| `tools/pulsar/` | 08 VJ Audio Visualizer |
+Icons in the hub link to `tools/NAME/` and open in a new tab. Relative paths
+only, no root absolute `/js/...` paths, so the site works from any subfolder.
 
-## Design system
+## The hub
 
-Modelled on a hardware quick start sheet: a light grey field with soft
-rounded cells, everything set in uppercase mono, one red accent dot.
+A phone home screen at narrow widths: status bar, a 2 x 4 icon grid, page
+dots, a dock. From 600px the phone gets a bezel; from 900px the bezel goes
+and the grid becomes a full screen 4 x 2 desktop.
+
+Dock:
+
+- **ABOUT** opens a Win9x style window with the tool list.
+- **LANG** toggles Turkish and English. The chip in the status bar does the
+  same. The choice is stored under the `marfo-lang` localStorage key and a
+  Turkish browser defaults to Turkish.
+- **RANDOM** opens one of the eight tools.
+
+Keyboard: arrow keys, Home and End move between icons, Escape closes the
+About window, Tab stays inside it while it is open.
+
+### Design tokens
 
 | Token | Value | Use |
 | --- | --- | --- |
-| `--bg` | `#e3e3e3` | Page field, visible as the gap between cells |
-| `--cell` | `#f0f0f0` | Cell fill |
-| `--ink` | `#2e2e2e` | Headings, names, numbers |
-| `--ink-soft` | `#585858` | Body copy |
-| `--ink-faint` | `#9b9b9b` | Counts, footer, resting state of `OPEN` |
-| `--ink-deep` | `#0a0a0a` | A tool cell under the cursor, and the circles |
-| `--on-ink` | `#ffffff` | Type on a turned over cell |
-| `--on-ink-soft` | `#b8b8b8` | Body copy on a turned over cell |
-| `--on-ink-hair` | `#3d3d3d` | The `OPEN` rule on a turned over cell |
-| `--red` | `#d71921` | Accent dot on hover |
-| `--r` | `22px` | Cell radius |
-| `--gap` | `10px` | Grid gap and page padding |
+| `--desk` | `#008080` | Desktop field |
+| `--dock` | `#3b9393` | Dock strip |
+| `--face` | `#c0c0c0` | Window and button faces |
+| `--light` / `--soft` / `--shadow` / `--dark` | `#fff` `#dfdfdf` `#808080` `#000` | The bevel rings |
+| `--navy` / `--navy2` | `#000080` `#1084d0` | Title bar gradient, selection |
+| `--ui` | Arimo | All interface type |
+| `--px` | Silkscreen | The MARFO wordmark |
 
-Type is [Doto](https://fonts.google.com/specimen/Doto) for titles, numbers and
-section letters, and [IBM Plex Mono](https://fonts.google.com/specimen/IBM+Plex+Mono)
-for everything else. Body copy is uppercase with open tracking.
+Icons are hand drawn 60 x 60 SVGs with `shape-rendering: crispEdges`, black
+1 to 2px strokes and flat Win9x palette fills.
 
-House style: no em dashes anywhere in the copy. Break the sentence or use a
-comma.
+House style for copy: no em dashes. Break the sentence or use a comma.
 
-## Hover
+## Translation
 
-The eight tool cells turn over to `--ink-deep` on hover and focus, type to
-white, over `.55s`. The lift runs faster at `.25s` so the card still feels
-responsive while the colour is still travelling. The red dot fades in at
-`.35s`. Category bars do not turn over: nothing there is clickable.
-
-## Categories
-
-| Key | Category | Tools |
-| --- | --- | --- |
-| A | Type | 01 to 03 |
-| B | Print & Pattern | 04 to 06 |
-| C | Sound & Visual | 07, 08 |
-
-Numbering runs `01` to `08` straight through, across categories. Adding a tool
-mid sheet therefore renumbers every card after it, and the two meta
-descriptions in `<head>` spell the total out in words.
+Any element with `data-tr="..."` carries its Turkish text in the attribute
+and its English text as content. The script swaps them. When adding copy to
+the hub, add both.
 
 ## Adding a tool
 
-Copy a `.tool` cell into the right category `.row`, then bump the numbers that
-follow it and the `count` on that category bar.
+1. Drop the tool's folder under `tools/NAME/`.
+2. Draw a 60 x 60 icon and save it as `tools/NAME/icon.svg`. Link it from the
+   tool's `<head>` as `<link rel="icon" href="icon.svg" type="image/svg+xml">`.
+3. Copy an `<a class="icon">` block in `index.html`, paste the icon's inner
+   SVG, set `href`, `data-name` and the label.
+4. Add a `<dt>` / `<dd>` pair to the About window, with a `data-tr` on the
+   `<dd>`.
+5. Update the two meta descriptions in `<head>`, the About copy and the
+   `8 tools` status cell, which all spell the total out.
+6. Regenerate `og.png` if the grid changes.
 
-```html
-<a class="cell tool" href="https://EXAMPLE.COM" target="_blank" rel="noopener">
-  <div class="cell-top"><span class="dot idx">00</span><span class="cue"></span></div>
-  <div class="name">WHAT IT DOES</div>
-  <div class="cell-body">
-    <div class="meta">
-      <span class="code">CODENAME</span>
-      <span class="desc">ONE OR TWO LINES, UPPERCASE, NO EM DASH.</span>
-    </div>
-    <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
-  </div>
-</a>
-```
+## Local preview
 
-`.name` is the function, `.code` is the project name. A visitor scans for what
-a thing does before they care what it is called.
-
-## Adding a category
-
-Add a bar, then a row under it:
-
-```html
-<div class="bar">
-  <span class="dot">G</span>
-  <h2>CATEGORY NAME</h2>
-  <span class="count">/ 2</span>
-</div>
-<div class="row">
-  ...tool cells...
-</div>
-```
-
-`.row` is `auto-fit, minmax(288px, 1fr)`, so two cells fill half the width each
-and three fill a third each. No empty slots to plan around.
-
-## Linking a new tool
-
-Drop the tool's folder under `tools/` and point the card at `tools/NAME/`.
-Relative asset paths only, no root absolute `/js/...` paths, so the site works
-from any subfolder.
+Any static server works, for example `npx serve .` or Python's
+`http.server`. Open `http://localhost:PORT/`. The tools that use the camera or
+microphone need `localhost` or HTTPS.

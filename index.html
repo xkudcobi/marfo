@@ -10,7 +10,13 @@
 <meta property="og:title" content="MARFO"/>
 <meta property="og:description" content="Eight browser based tools for type, pattern, poster and sound work. Nothing to install."/>
 <meta property="og:type" content="website"/>
-<meta name="twitter:card" content="summary"/>
+<meta property="og:url" content="https://xkudcobi.github.io/marfo/"/>
+<meta property="og:image" content="https://xkudcobi.github.io/marfo/og.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://xkudcobi.github.io/marfo/og.png"/>
+<link rel="canonical" href="https://xkudcobi.github.io/marfo/"/>
 <link rel="icon" href="logo.svg" type="image/svg+xml"/>
 <link rel="apple-touch-icon" href="logo.svg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -54,7 +60,7 @@ a{color:inherit;text-decoration:none}
 .phone{
   position:relative;
   width:100%;max-width:390px;
-  height:100dvh;
+  height:100vh;height:100dvh;
   background:var(--desk);
   display:flex;flex-direction:column;
   overflow:hidden;
@@ -78,6 +84,8 @@ a{color:inherit;text-decoration:none}
 }
 .status .brand{font-family:var(--px);font-size:12px;letter-spacing:1px}
 .status .clock{font-variant-numeric:tabular-nums}
+.status .lang{font-weight:700;text-shadow:inherit;padding:2px 4px;margin:-2px -4px}
+.status .lang:focus-visible{outline:1px dotted #fff;outline-offset:-1px}
 
 /* ---------- ICON GRID ---------- */
 .grid{
@@ -228,7 +236,7 @@ a{color:inherit;text-decoration:none}
   <div class="status">
     <span class="clock" id="clock">00:00</span>
     <span class="brand">MARFO</span>
-    <span class="lang" id="langNow">EN</span>
+    <button class="lang" id="langNow" type="button" aria-label="Language">EN</button>
   </div>
 
   <!-- ============ ICONS ============ -->
@@ -458,7 +466,7 @@ a{color:inherit;text-decoration:none}
         <div class="win-foot">
           <button class="btn default" type="button" id="aboutOk">OK</button>
         </div>
-        <div class="statusbar"><span>MARFO v1.0</span><span data-tr="8 araç">8 tools</span></div>
+        <div class="statusbar"><span>MARFO v1.1</span><span data-tr="8 araç">8 tools</span></div>
       </div>
     </div>
   </div>
@@ -485,13 +493,17 @@ a{color:inherit;text-decoration:none}
     document.documentElement.lang=l;
     document.getElementById('langNow').textContent=l.toUpperCase();
     document.getElementById('langChip').textContent=(l==='en'?'TR':'EN');
+    document.getElementById('aboutX').setAttribute('aria-label',l==='tr'?'Kapat':'Close');
+    document.getElementById('langNow').setAttribute('aria-label',l==='tr'?'Dil: Türkçe. İngilizceye geç':'Language: English. Switch to Turkish');
     try{localStorage.setItem('marfo-lang',l);}catch(e){}
   }
   var saved=null;
   try{saved=localStorage.getItem('marfo-lang');}catch(e){}
   if(!saved && /^tr/i.test(navigator.language||'')) saved='tr';
   apply(saved==='tr'?'tr':'en');
-  document.getElementById('langBtn').addEventListener('click',function(){apply(lang==='en'?'tr':'en');});
+  function toggleLang(){apply(lang==='en'?'tr':'en');}
+  document.getElementById('langBtn').addEventListener('click',toggleLang);
+  document.getElementById('langNow').addEventListener('click',toggleLang);
 
   /* ---------- about window ---------- */
   var about=document.getElementById('about');
@@ -501,14 +513,43 @@ a{color:inherit;text-decoration:none}
   document.getElementById('aboutOk').addEventListener('click',closeAbout);
   document.getElementById('aboutX').addEventListener('click',closeAbout);
   about.addEventListener('click',function(e){if(e.target===about)closeAbout();});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!about.hidden)closeAbout();});
+  document.addEventListener('keydown',function(e){
+    if(about.hidden)return;
+    if(e.key==='Escape'){closeAbout();return;}
+    if(e.key==='Tab'){
+      var f=[document.getElementById('aboutX'),document.getElementById('aboutOk')];
+      var i=f.indexOf(document.activeElement);
+      e.preventDefault();
+      f[i<0?1:1-i].focus();
+    }
+  });
 
   /* ---------- random tool ---------- */
   var tools=Array.prototype.slice.call(document.querySelectorAll('#grid .icon'));
   document.getElementById('randomBtn').addEventListener('click',function(){
     var pick=tools[Math.floor(Math.random()*tools.length)];
+    tools.forEach(function(t){t.classList.remove('is-on');});
     pick.classList.add('is-on');
-    setTimeout(function(){pick.classList.remove('is-on');window.open(pick.href,'_blank','noopener');},180);
+    window.open(pick.href,'_blank','noopener');
+    setTimeout(function(){pick.classList.remove('is-on');},400);
+  });
+
+  /* ---------- arrow keys walk the grid ---------- */
+  var grid=document.getElementById('grid');
+  grid.addEventListener('keydown',function(e){
+    var i=tools.indexOf(document.activeElement);
+    if(i<0)return;
+    var cols=getComputedStyle(grid).gridTemplateColumns.split(' ').length;
+    var j=i;
+    if(e.key==='ArrowRight')j=i+1;
+    else if(e.key==='ArrowLeft')j=i-1;
+    else if(e.key==='ArrowDown')j=i+cols;
+    else if(e.key==='ArrowUp')j=i-cols;
+    else if(e.key==='Home')j=0;
+    else if(e.key==='End')j=tools.length-1;
+    else return;
+    e.preventDefault();
+    if(j>=0&&j<tools.length)tools[j].focus();
   });
 
   /* ---------- win95 select-on-tap ---------- */
