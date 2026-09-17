@@ -14,6 +14,7 @@ from `main`. Static files only, no build step.
 | `404.html` | Not found page in the same window style. Pages serves it for any missing path. |
 | `logo.svg` | The mark: white square, black circle. Favicon and apple touch icon of the hub. |
 | `og.png` | 1200 x 630 share image for link previews. |
+| `apple-touch-icon.png`, `icon-192.png`, `icon-512.png`, `site.webmanifest` | Home screen install: iOS wants a PNG touch icon, Android reads the manifest. |
 | `tools/` | The tools themselves, one folder each. Each is self contained. |
 | `tools/NAME/icon.svg` | The tool's desktop icon, also used as that tool's favicon. |
 
