@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>MARFO / TOOLS INDEX</title>
+<meta name="description" content="Eight browser based tools for type, pattern, poster and sound work. Nothing to install."/>
+<meta name="author" content="MARFO"/>
+<meta name="theme-color" content="#e4e4e4"/>
+<meta property="og:title" content="MARFO / TOOLS INDEX"/>
+<meta property="og:description" content="Eight browser based tools for type, pattern, poster and sound work. Nothing to install."/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary"/>
+<link rel="icon" href="logo.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="logo.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Doto:wght@300;500;700;900&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  color-scheme:light;
+  --bg:#e3e3e3;
+  --cell:#f0f0f0;
+  --ink:#2e2e2e;
+  --ink-soft:#585858;
+  --ink-faint:#9b9b9b;
+  --ink-deep:#0a0a0a;
+  --on-ink:#ffffff;
+  --on-ink-soft:#b8b8b8;
+  --on-ink-hair:#3d3d3d;
+  --hair:#d8d8d8;
+  --red:#d71921;
+  --dot:'Doto',ui-monospace,monospace;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --r:22px;
+  --gap:10px;
+}
+
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--mono);
+  font-size:12px;
+  line-height:1.6;
+  letter-spacing:0.02em;
+  text-transform:uppercase;
+  -webkit-font-smoothing:antialiased;
+  padding:var(--gap);
+}
+::selection{background:var(--ink);color:var(--cell)}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+
+.sheet{max-width:1180px;margin:0 auto}
+
+/* ---------- LANGUAGE ---------- */
+.lang{display:inline-flex;gap:6px;align-items:center}
+.lang button{
+  font:inherit;letter-spacing:inherit;text-transform:inherit;
+  background:none;border:0;padding:0;cursor:pointer;
+  color:var(--ink-faint);transition:color .25s;
+}
+.lang button:hover,.lang button:focus-visible{color:var(--ink);outline:none}
+.lang button[aria-pressed="true"]{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.lang-sep{color:var(--ink-faint)}
+
+/* ---------- GRID ---------- */
+.row{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(288px,1fr));
+  gap:var(--gap);
+  margin-bottom:var(--gap);
+}
+.row--three{grid-template-columns:repeat(3,1fr)}
+
+/* ---------- CELL ---------- */
+.cell{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  background:var(--cell);
+  border-radius:var(--r);
+  padding:26px 26px 28px;
+  min-height:330px;
+}
+.cell-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.cell-body{margin-top:auto;padding-top:36px}
+
+/* dot matrix type */
+.dot{
+  font-family:var(--dot);
+  font-weight:700;
+  letter-spacing:0.1em;
+  line-height:1.05;
+  color:var(--ink);
+}
+.title{font-size:clamp(26px,3.6vw,38px)}
+.idx{font-size:28px;font-weight:900;letter-spacing:0.14em}
+
+.label{
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:0.16em;
+  color:var(--ink);
+  margin-top:26px;
+}
+.meta{font-size:11.5px;color:var(--ink-soft);letter-spacing:0.045em}
+.meta + .meta{margin-top:18px}
+.meta b{font-weight:500;color:var(--ink);display:block}
+.faint{color:var(--ink-faint)}
+
+/* brand line, third masthead cell */
+.claim{
+  font-size:13px;
+  font-weight:500;
+  line-height:1.75;
+  letter-spacing:0.07em;
+  color:var(--ink);
+  max-width:29ch;
+}
+
+/* attractor field, third masthead cell. Circles run the full cell, edge to
+   edge, and the copy sits over them. */
+.cell--play{
+  cursor:crosshair;
+  overflow:hidden;
+  isolation:isolate;
+}
+/* z-index:-1 keeps the canvas above the cell background but below the copy,
+   and leaves the copy in the cell's own blending group. Giving .cell-body a
+   stacking context of its own would cut the text off from that group. */
+.play{
+  position:absolute;
+  inset:0;
+  z-index:-1;
+}
+.play canvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+}
+/* Difference blending keeps the line readable in both directions: near black
+   over the cell, near white wherever a circle passes under it. */
+@supports (mix-blend-mode:difference){
+  .cell--play .claim{
+    color:#ffffff;
+    mix-blend-mode:difference;
+  }
+}
+
+/* red dot, as on the reference sheet */
+.rdot{
+  width:16px;height:16px;border-radius:50%;
+  background:var(--red);
+  flex-shrink:0;
+}
+
+/* ---------- SECTION BAR ---------- */
+.bar{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  background:var(--cell);
+  border-radius:var(--r);
+  padding:16px 26px;
+  margin-bottom:var(--gap);
+}
+.bar .dot{font-size:22px;font-weight:900}
+.bar h2{
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:0.18em;
+  color:var(--ink);
+}
+.bar .count{margin-left:auto;font-size:11px;color:var(--ink-faint);letter-spacing:0.12em}
+
+/* ---------- TOOL CELL ---------- */
+/* Hover turns the whole cell over to black, slowly, and the type to white. */
+.tool{transition:background-color .55s ease,transform .25s ease}
+.tool *{transition:color .55s ease,border-color .55s ease}
+.tool:hover,.tool:focus-visible{
+  background:var(--ink-deep);
+  transform:translateY(-2px);
+  outline:none;
+}
+.tool:focus-visible{box-shadow:0 0 0 2px var(--ink)}
+.tool:hover .dot,.tool:focus-visible .dot,
+.tool:hover .name,.tool:focus-visible .name,
+.tool:hover .code,.tool:focus-visible .code,
+.tool:hover .go,.tool:focus-visible .go{color:var(--on-ink)}
+.tool:hover .meta,.tool:focus-visible .meta,
+.tool:hover .desc,.tool:focus-visible .desc{color:var(--on-ink-soft)}
+.tool:hover .go,.tool:focus-visible .go{border-top-color:var(--on-ink-hair)}
+.tool .cue{
+  width:16px;height:16px;border-radius:50%;
+  background:var(--red);
+  opacity:0;
+  transition:opacity .35s ease;
+  flex-shrink:0;
+}
+.tool:hover .cue,.tool:focus-visible .cue{opacity:1}
+.tool .name{
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:0.09em;
+  line-height:1.35;
+  margin-top:26px;
+}
+.tool .code{font-weight:500;color:var(--ink);display:block;margin-bottom:4px}
+.tool .desc{font-size:11.5px;color:var(--ink-soft);letter-spacing:0.045em}
+.go{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin-top:22px;
+  padding-top:14px;
+  border-top:1px solid var(--hair);
+  font-size:10.5px;
+  font-weight:500;
+  letter-spacing:0.18em;
+  color:var(--ink-faint);
+  transition:color .18s ease;
+}
+.go svg{width:9px;height:9px;flex-shrink:0}
+
+/* ---------- CONTACT ---------- */
+.contact{min-height:auto}
+.contact .cell-body{padding-top:30px}
+.mailto{border-bottom:1px solid var(--ink-faint);transition:border-color .18s ease,color .18s ease}
+.mailto:hover,.mailto:focus-visible{color:var(--red);border-color:var(--red);outline:none}
+
+/* ---------- FOOT ---------- */
+.foot{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px 26px;
+  padding:20px 26px 8px;
+  font-size:10.5px;
+  letter-spacing:0.16em;
+  color:var(--ink-faint);
+}
+
+@media (max-width:880px){
+  .row--three{grid-template-columns:1fr}
+  .cell{min-height:280px;padding:22px 22px 24px}
+  .bar{padding:14px 22px}
+  .foot{padding:18px 22px 8px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  .tool:hover,.tool:focus-visible{transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="sheet">
+
+  <!-- ============ MASTHEAD ============ -->
+  <div class="row row--three">
+
+    <div class="cell">
+      <div class="cell-top"><span class="dot title">MARFO</span></div>
+      <div class="cell-body">
+        <div class="meta">
+          <b>MARFO</b>
+          <span data-tr="TARAYICI TABANLI TASARIM ARAÇLARI">BROWSER BASED DESIGN TOOLS</span><br/>
+          <span data-tr="ARAÇ DİZİNİ V1.0.0">TOOLS INDEX V1.0.0</span><br/>
+          <span data-tr="DİL :">LANGUAGE :</span>
+          <span class="lang" role="group" aria-label="Language"><button type="button" data-lang="en" aria-pressed="true">EN</button><span class="lang-sep">/</span><button type="button" data-lang="tr" aria-pressed="false">TR</button></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cell">
+      <div class="cell-top"><span class="dot title" data-tr="NASIL KULLANILIR">HOW TO USE</span></div>
+      <div class="cell-body">
+        <div class="meta">
+          <b data-tr="AÇ">OPEN</b>
+          <span data-tr="ARACI YENİ SEKMEDE BAŞLATMAK İÇİN HERHANGİ BİR KARTA DOKUN.">TAP ANY CARD TO LAUNCH THE TOOL IN A NEW TAB.</span>
+        </div>
+        <div class="meta">
+          <b data-tr="ÇALIŞTIR">RUN</b>
+          <span data-tr="HER ŞEY TARAYICINDA ÇALIŞIR. KURULUM YOK, HESAP YOK, ÜCRET YOK.">EVERYTHING RUNS IN YOUR BROWSER. NO INSTALL, NO ACCOUNT, NO COST.</span>
+        </div>
+        <div class="meta">
+          <b data-tr="SAKLA">KEEP</b>
+          <span data-tr="İŞİNİ FONT, SVG, PNG, VİDEO YA DA MIDI OLARAK DIŞA AKTAR.">EXPORT YOUR WORK AS FONT, SVG, PNG, VIDEO OR MIDI.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cell cell--play" id="field">
+      <div class="play" aria-hidden="true"><canvas></canvas></div>
+      <div class="cell-body">
+        <p class="claim" data-tr="YAZI, DESEN, POSTER VE GÜRÜLTÜ ÜRETMEK İÇİN KÜÇÜK ARAÇLAR.">SMALL TOOLS FOR MAKING TYPE, PATTERNS, POSTERS AND NOISE.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============ A / TYPE ============ -->
+  <div class="bar">
+    <span class="dot">A</span>
+    <h2 data-tr="YAZI">TYPE</h2>
+    <span class="count">/ 3</span>
+  </div>
+  <div class="row">
+    <a class="cell tool" href="tools/kinetik/" target="_blank" rel="noopener">
+      <div class="cell-top"><span class="dot idx">01</span><span class="cue"></span></div>
+      <div class="name" data-tr="KİNETİK YAZI ANİMATÖRÜ">KINETIC TYPE ANIMATOR</div>
+      <div class="cell-body">
+        <div class="meta">
+          <span class="code">KINETIK</span>
+          <span class="desc" data-tr="HARFLERİ ZAMAN ÇİZELGESİNDE HAREKETE GEÇİR, YUMUŞATMAYI AYARLA, PNG, SVG YA DA KARE DİZİSİ OLARAK DIŞA AKTAR.">SET LETTERS IN MOTION ON A TIMELINE, TUNE THE EASING, EXPORT PNG, SVG OR A FRAME SEQUENCE.</span>
+        </div>
+        <div class="go"><span data-tr="AÇ">OPEN</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      </div>
+    </a>
+
+    <a class="cell tool" href="tools/molten/" target="_blank" rel="noopener">
+      <div class="cell-top"><span class="dot idx">02</span><span class="cue"></span></div>
+      <div class="name" data-tr="SIVI FONT ÜRETİCİ">LIQUID FONT GENERATOR</div>
+      <div class="cell-body">
+        <div class="meta">
+          <span class="code">MOLTEN</span>
+          <span class="desc" data-tr="HARF BİÇİMLERİNİ ERİT VE YENİDEN AKIT, SONRA KULLANILABİLİR BİR OPENTYPE FONT OLARAK DIŞA AKTAR.">MELT AND REFLOW LETTERFORMS, THEN EXPORT A USABLE OPENTYPE TYPEFACE.</span>
+        </div>
+        <div class="go"><span data-tr="AÇ">OPEN</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      </div>
+    </a>
+
+    <a class="cell tool" href="tools/halo/" target="_blank" rel="noopener">
+      <div class="cell-top"><span class="dot idx">03</span><span class="cue"></span></div>
+      <div class="name" data-tr="ERİYEN VE HALELİ YAZI">MELT AND HALO TYPE</div>
+      <div class="cell-body">
+        <div class="meta">
+          <span class="code">HALO</span>
+          <span class="desc" data-tr="YAZININ ÜZERİNDE SÜRÜKLEYEREK ONU ERİT VE RENKLİ BİR HALE OLUŞTUR. PNG, WEBM YA DA GIF OLARAK DIŞA AKTAR.">DRAG ACROSS THE TYPE TO PULL IT INTO GOO AND RAISE A COLOUR HALO. EXPORT PNG, WEBM OR GIF.</span>
+        </div>
+        <div class="go"><span data-tr="AÇ">OPEN</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- ============ B / PRINT AND PATTERN ============ -->
+  <div class="bar">
+    <span class="dot">B</span>
+    <h2 data-tr="BASKI VE DESEN">PRINT AND PATTERN</h2>
+    <span class="count">/ 3</span>
+  </div>
+  <div class="row">
+    <a class="cell tool" href="tools/tessera/" target="_blank" rel="noopener">
+      <div class="cell-top"><span class="dot idx">04</span><span class="cue"></span></div>
+      <div class="name" data-tr="MOZAİK KARO ÜRETİCİ">MOSAIC TILE GENERATOR</div>
+      <div class="cell-body">
+        <div class="meta">
+          <span class="code">TESSERA</span>
+          <span class="desc" data-tr="METNİ YA DA LOGOYU SERAMİK MOZAİK KAROLARLA DİZ, SONRA PNG YA DA SVG OLARAK DIŞA AKTAR.">SET TEXT OR A LOGO IN CERAMIC MOSAIC TILES, THEN EXPORT PNG OR SVG.</span>
+        </div>
+        <div class="go"><span data-tr="AÇ">OPEN</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      </div>
+    </a>
+
+    <a class="cell tool" href="tools/lattice/" target="_blank" rel="noopener">
+      <div class="cell-top"><span class="dot idx">05</span><span class="cue"></span></div>
+      <div class="name" data-tr="DESEN ÜRETİCİ">PATTERN GENERATOR</div>
+      <div class="cell-body">
+        <div class="meta">
+          <span class="code">LATTICE</span>
+          <span class="desc" data-tr="BİR DESEN TİPİ SEÇ, PALET ATA, TİPOGRAFİK KATMAN EKLE, DÖŞENEBİLİR SVG OLARAK DIŞA AKTAR.">PICK A PATTERN TYPE, ASSIGN A PALETTE, ADD A TYPOGRAPHIC LAYER, EXPORT TILEABLE SVG.</span>
+        </div>
+        <div class="go"><span data-tr="AÇ">OPEN</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      </div>
+    </a>
+
+    <a class="cell tool" href="tools/ember/" target="_blank" rel="noopener">
+      <div class="cell-top"><span class="dot idx">06</span><span class="cue"></span></div>
+      <div class="name" data-tr="TERMAL POSTER YAPICI">THERMAL POSTER MAKER</div>
+      <div class="cell-body">
+        <div class="meta">
+          <span class="code">EMBER</span>
+          <span class="desc" data-tr="YAZIYI, LOGOYU YA DA SVG DOSYASINI TERMAL BİR AKIŞKANDA ERİT, SONRA KİRLİ TARA. PNG, GIF YA DA WEBM OLARAK DIŞA AKTAR.">MELT TYPE, A LOGO OR AN SVG INTO A THERMAL FLUID, THEN SCAN IT DIRTY. EXPORT PNG, GIF OR WEBM.</span>
+        </div>
+        <div class="go"><span data-tr="AÇ">OPEN</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- ============ C / SOUND AND VISUAL ============ -->
+  <div class="bar">
+    <span class="dot">C</span>
+    <h2 data-tr="SES VE GÖRSEL">SOUND AND VISUAL</h2>
+    <span class="count">/ 2</span>
+  </div>
+  <div class="row">
+    <a class="cell tool" href="tools/stepper/" target="_blank" rel="noopener">
+      <div class="cell-top"><span class="dot idx">07</span><span class="cue"></span></div>
+      <div class="name" data-tr="ADIM SEKANSÖRÜ">STEP SEQUENCER</div>
+      <div class="cell-body">
+        <div class="meta">
+          <span class="code">STEPPER</span>
+          <span class="desc" data-tr="ÖRNEKLER, TÜR ÖN AYARLARI, UZAMSAL EFEKTLER VE KAYIT YUVALARI OLAN TARAYICI TABANLI MIDI SEKANSÖR.">BROWSER NATIVE MIDI SEQUENCER WITH SAMPLES, GENRE PRESETS, SPATIAL FX AND SAVE SLOTS.</span>
+        </div>
+        <div class="go"><span data-tr="AÇ">OPEN</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      </div>
+    </a>
+
+    <a class="cell tool" href="tools/pulsar/" target="_blank" rel="noopener">
+      <div class="cell-top"><span class="dot idx">08</span><span class="cue"></span></div>
+      <div class="name" data-tr="VJ SES GÖRSELLEŞTİRİCİ">VJ AUDIO VISUALIZER</div>
+      <div class="cell-body">
+        <div class="meta">
+          <span class="code">PULSAR</span>
+          <span class="desc" data-tr="SESE TEPKİ VEREN, WEBCAM GİRİŞLİ, HAREKET TAKİPLİ VE SHADER EFEKTLİ CANLI VJ MOTORU.">LIVE VJ ENGINE WITH AUDIO REACTIVITY, WEBCAM INPUT, GESTURE TRACKING AND SHADER EFFECTS.</span>
+        </div>
+        <div class="go"><span data-tr="AÇ">OPEN</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- ============ CONTACT ============ -->
+  <div class="row">
+    <div class="cell contact">
+      <div class="cell-top">
+        <span class="dot idx">D</span>
+        <span class="rdot"></span>
+      </div>
+      <div class="label" data-tr="İLETİŞİM">CONTACT</div>
+      <div class="cell-body">
+        <div class="meta">
+          <span data-tr="BİR ŞEY Mİ BOZULDU, YA DA BİR ARAÇ FİKRİN Mİ VAR ?">SOMETHING BROKEN, OR AN IDEA FOR A TOOL ?</span><br/>
+          <span data-tr="YAZ :">WRITE TO</span> <a class="mailto" href="mailto:hello@marfo.studio">HELLO@MARFO.STUDIO</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>MARFO</span>
+    <span data-tr="ARAÇ DİZİNİ V1.0.0">TOOLS INDEX V1.0.0</span>
+    <span>HELLO@MARFO.STUDIO</span>
+    <span>2026</span>
+  </div>
+
+</div>
+
+<script>
+/* Cursor attractor field. Circles drift in the masthead cell and are pulled
+   toward the pointer while it is inside that cell. No dependencies. */
+(function () {
+  var cell = document.getElementById('field');
+  if (!cell) return;
+  var host = cell.querySelector('.play');
+  var canvas = host.querySelector('canvas');
+  var ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  var INK = '#0a0a0a';
+  var PAPER = (getComputedStyle(document.documentElement)
+    .getPropertyValue('--cell') || '#f0f0f0').trim() || '#f0f0f0';
+  var FIELD = 150;      /* pointer field radius, css px, sized to the cell in measure() */
+  var PULL = 0.20;      /* pull at the centre of the field, px per frame squared */
+  var DAMP_IDLE = 0.995;/* almost lossless, so they keep floating */
+  var DAMP_PULL = 0.985;/* a little more loss, so they settle into the cluster */
+  var STEER = 0.012;    /* random steering, keeps paths from going straight forever */
+  var VMIN = 0.16;      /* floating speed floor, px per frame */
+  var VMAX = 0.85;      /* floating speed ceiling */
+  var VCAP = 6;         /* hard speed cap while the pointer pulls */
+  var EASE = 0.06;      /* how fast speed eases back into the float band */
+  var WALL = 0.98;      /* wall restitution */
+  var BOUNCE = 0.85;    /* body to body restitution */
+
+  var w = 0, h = 0, bodies = [], raf = 0, last = 0;
+  var onScreen = true, running = false;
+  var pointer = { x: 0, y: 0, on: false };
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function measure() {
+    var r = host.getBoundingClientRect();
+    w = Math.max(1, Math.round(r.width));
+    h = Math.max(1, Math.round(r.height));
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    FIELD = Math.max(110, Math.min(230, (w + h) * 0.5));
+  }
+
+  function idealCount() {
+    return Math.max(22, Math.min(90, Math.round((w * h) / 1900)));
+  }
+
+  function seed() {
+    var n = idealCount();
+    var big = Math.min(w, h) < 160 ? 6.5 : 8.5;
+    bodies = [];
+    for (var i = 0; i < n; i++) {
+      var rad = 3 + Math.pow(Math.random(), 1.8) * big;
+      var sp = VMIN + Math.random() * (VMAX - VMIN);
+      var a = Math.random() * Math.PI * 2;
+      bodies.push({
+        x: rad + Math.random() * Math.max(1, w - rad * 2),
+        y: rad + Math.random() * Math.max(1, h - rad * 2),
+        vx: Math.cos(a) * sp,
+        vy: Math.sin(a) * sp,
+        r: rad,
+        m: rad * rad
+      });
+    }
+  }
+
+  function step(dt) {
+    var pulling = pointer.on;
+    var damp = Math.pow(pulling ? DAMP_PULL : DAMP_IDLE, dt);
+    var i, j, b;
+
+    for (i = 0; i < bodies.length; i++) {
+      b = bodies[i];
+      if (pulling) {
+        var dx = pointer.x - b.x, dy = pointer.y - b.y;
+        var d = Math.sqrt(dx * dx + dy * dy) || 0.01;
+        if (d < FIELD) {
+          var f = PULL * (1 - d / FIELD) * dt;
+          b.vx += (dx / d) * f;
+          b.vy += (dy / d) * f;
+        }
+      }
+      b.vx += (Math.random() - 0.5) * STEER * dt;
+      b.vy += (Math.random() - 0.5) * STEER * dt;
+      b.vx *= damp;
+      b.vy *= damp;
+
+      /* Hold the idle speed inside a band so nothing ever settles, and cap the
+         rush while the pointer pulls. Eased, so letting go does not pop. */
+      var sp = Math.sqrt(b.vx * b.vx + b.vy * b.vy);
+      if (sp < 0.0001) {
+        b.vx = (Math.random() - 0.5) * VMIN * 2;
+        b.vy = (Math.random() - 0.5) * VMIN * 2;
+      } else if (pulling) {
+        if (sp > VCAP) { b.vx *= VCAP / sp; b.vy *= VCAP / sp; }
+      } else {
+        var want = sp < VMIN ? VMIN : (sp > VMAX ? VMAX : sp);
+        if (want !== sp) {
+          var k = 1 + (want / sp - 1) * Math.min(1, EASE * dt);
+          b.vx *= k; b.vy *= k;
+        }
+      }
+
+      b.x += b.vx * dt;
+      b.y += b.vy * dt;
+
+      if (b.x - b.r < 0) { b.x = b.r; b.vx = Math.abs(b.vx) * WALL; }
+      else if (b.x + b.r > w) { b.x = w - b.r; b.vx = -Math.abs(b.vx) * WALL; }
+      if (b.y - b.r < 0) { b.y = b.r; b.vy = Math.abs(b.vy) * WALL; }
+      else if (b.y + b.r > h) { b.y = h - b.r; b.vy = -Math.abs(b.vy) * WALL; }
+    }
+
+    for (i = 0; i < bodies.length; i++) {
+      for (j = i + 1; j < bodies.length; j++) {
+        var a = bodies[i], c = bodies[j];
+        var ox = c.x - a.x, oy = c.y - a.y;
+        var dist = Math.sqrt(ox * ox + oy * oy);
+        var min = a.r + c.r;
+        if (dist === 0) { dist = 0.01; ox = 0.01; oy = 0; }
+        if (dist >= min) continue;
+
+        var nx = ox / dist, ny = oy / dist;
+        var over = min - dist, tm = a.m + c.m;
+        a.x -= nx * over * (c.m / tm);
+        a.y -= ny * over * (c.m / tm);
+        c.x += nx * over * (a.m / tm);
+        c.y += ny * over * (a.m / tm);
+
+        var sep = (c.vx - a.vx) * nx + (c.vy - a.vy) * ny;
+        if (sep >= 0) continue;
+        var imp = -(1 + BOUNCE) * sep / (1 / a.m + 1 / c.m);
+        a.vx -= (imp / a.m) * nx; a.vy -= (imp / a.m) * ny;
+        c.vx += (imp / c.m) * nx; c.vy += (imp / c.m) * ny;
+      }
+    }
+  }
+
+  function draw() {
+    /* Painted, not cleared: the copy above blends against this, so the ground
+       under it has to be opaque. */
+    ctx.fillStyle = PAPER;
+    ctx.fillRect(0, 0, w, h);
+    ctx.fillStyle = INK;
+    for (var i = 0; i < bodies.length; i++) {
+      var b = bodies[i];
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  function frame(now) {
+    var dt = last ? Math.min((now - last) / 16.667, 2.5) : 1;
+    last = now;
+    step(dt);
+    draw();
+    raf = requestAnimationFrame(frame);
+  }
+
+  function start() {
+    if (running || still.matches) return;
+    running = true;
+    last = 0;
+    raf = requestAnimationFrame(frame);
+  }
+
+  function stop() {
+    running = false;
+    cancelAnimationFrame(raf);
+  }
+
+  function sync() {
+    if (onScreen && !document.hidden) start();
+    else stop();
+  }
+
+  measure();
+  seed();
+  draw();
+
+  cell.addEventListener('pointermove', function (e) {
+    var r = host.getBoundingClientRect();
+    pointer.x = e.clientX - r.left;
+    pointer.y = e.clientY - r.top;
+    pointer.on = true;
+  });
+  cell.addEventListener('pointerleave', function () { pointer.on = false; });
+  cell.addEventListener('pointercancel', function () { pointer.on = false; });
+
+  var resizeTimer = 0;
+  function onResize() {
+    var before = bodies.length;
+    measure();
+    for (var i = 0; i < bodies.length; i++) {
+      var b = bodies[i];
+      b.x = Math.min(Math.max(b.x, b.r), Math.max(b.r, w - b.r));
+      b.y = Math.min(Math.max(b.y, b.r), Math.max(b.r, h - b.r));
+    }
+    draw();
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      if (Math.abs(idealCount() - before) > before * 0.25) { seed(); draw(); }
+    }, 220);
+  }
+
+  if (window.ResizeObserver) new ResizeObserver(onResize).observe(host);
+  else window.addEventListener('resize', onResize);
+
+  if (window.IntersectionObserver) {
+    new IntersectionObserver(function (entries) {
+      onScreen = entries[0].isIntersecting;
+      sync();
+    }).observe(cell);
+  }
+
+  document.addEventListener('visibilitychange', sync);
+  if (still.addEventListener) still.addEventListener('change', function () {
+    if (still.matches) { stop(); seed(); draw(); } else sync();
+  });
+
+  sync();
+})();
+
+/* ---------- LANGUAGE ---------- */
+(function(){
+  var nodes=document.querySelectorAll('[data-tr]');
+  nodes.forEach(function(n){n.setAttribute('data-en',n.textContent);});
+  var btns=document.querySelectorAll('.lang button');
+  var titles={en:'MARFO / TOOLS INDEX',tr:'MARFO / ARA\u00c7 D\u0130Z\u0130N\u0130'};
+  function apply(lang){
+    nodes.forEach(function(n){n.textContent=n.getAttribute('data-'+lang);});
+    btns.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.lang===lang));});
+    document.documentElement.lang=lang;
+    document.title=titles[lang];
+    try{localStorage.setItem('marfo-lang',lang);}catch(e){}
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){apply(b.dataset.lang);});});
+  var saved=null;
+  try{saved=localStorage.getItem('marfo-lang');}catch(e){}
+  if(!saved && /^tr/i.test(navigator.language||'')) saved='tr';
+  if(saved==='tr') apply('tr');
+})();
+</script>
+
+</body>
+</html>
