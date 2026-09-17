@@ -159,7 +159,7 @@ function TerminalWindow({
 
     if (minimized) {
         return (
-            <div className="minimized-indicator" style={{ left: pos.x + 'px', top: pos.y + 'px' }} onClick={onClose}>
+            <div className="minimized-indicator" style={{ left: isMobile ? 'auto' : pos.x + 'px', top: isMobile ? 'auto' : pos.y + 'px' }} onClick={onClose}>
                 {title}
             </div>
         );

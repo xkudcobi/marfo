@@ -229,6 +229,16 @@ body.light-theme{background:#f0ede8;color:#442200}
 body.light-theme #hud-bar{background:rgba(240,237,232,0.94);border-bottom-color:rgba(0,0,0,0.08)}
 body.light-theme #panel{background:rgba(240,237,232,0.96);border-color:rgba(0,0,0,0.1);border-left-color:#FF5500}
 body.light-theme #hud-text-card{background:rgba(240,237,232,0.94)}
+
+/* phone: the HUD wraps to two rows, the control panel starts closed and sits
+   below it, leaving room for the text card at the bottom */
+@media (max-width: 640px){
+  #hud-bar{height:auto;min-height:34px;flex-wrap:wrap;padding:4px 8px;row-gap:2px}
+  .hud-spacer{display:none}
+  #panel-toggle{top:72px}
+  #panel{top:104px;width:calc(100vw - 24px);max-height:calc(100vh - 104px - 150px)}
+  #hud-text-card{right:12px;min-width:0}
+}
 </style>
 </head>
 <body>
@@ -552,6 +562,7 @@ var hudM=document.getElementById('hud-m'),hudN=document.getElementById('hud-n');
 
 // ── State ─────────────────────────────────────────────────────────────────────
 var W=800,H=600,panelOpen=true;var PANEL_W=284;
+if(window.matchMedia('(max-width: 640px)').matches){panelOpen=false;document.getElementById('panel').classList.add('hidden');}
 var particles=[],particleColors=[],customFont=null;
 var micStream=null,analyser=null,micActive=false,audioCtx=null;
 var mp3Buffer=null,mp3Source=null,mp3Playing=false,audioMode='mic';

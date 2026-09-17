@@ -106,6 +106,12 @@ input[type=color]{width:28px;height:28px;padding:0;border:1px solid var(--border
 .live-dot{width:6px;height:6px;border-radius:50%;background:var(--border3);flex-shrink:0;}
 .live-dot.on{background:var(--accent);animation:pulse 1s infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+/* phone: the panel is a drawer that starts closed */
+@media (max-width: 640px){
+  .panel{width:min(320px,86vw);}
+  .panel.collapsed{transform:translateX(-100%);}
+  .panel:not(.collapsed) ~ .panel-toggle{left:auto;right:12px;top:52px;}
+}
 </style>
 </head>
 <body>
@@ -688,6 +694,7 @@ class Twist{
 // ═══════════════════════════════════════════════════════════════════
 document.querySelectorAll('.sh').forEach(h=>{h.addEventListener('click',()=>{const b=document.getElementById('sec-'+h.dataset.sec);const o=h.classList.toggle('open');b.classList.toggle('hidden',!o);});});
 document.getElementById('panelToggle').addEventListener('click',()=>{document.getElementById('mainPanel').classList.toggle('collapsed');});
+if(window.matchMedia('(max-width: 640px)').matches)document.getElementById('mainPanel').classList.add('collapsed');
 document.getElementById('playToggle').addEventListener('click',function(){playing=!playing;this.classList.toggle('on',playing);document.getElementById('liveDot').classList.toggle('on',playing);});
 document.querySelectorAll('input[name="textMode"]').forEach(r=>{r.addEventListener('change',()=>{displayMode=parseInt(r.value);
   if(displayMode==0){document.getElementById('textModeUI').style.display='block';}else{document.getElementById('textModeUI').style.display='none';sceneLength=floor(frate)+2;}pickScene();});});

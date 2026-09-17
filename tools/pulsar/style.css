@@ -1643,6 +1643,8 @@ input[type="range"]:focus-visible {
     .brutalist-button { font-size: 0.7rem; padding: 6px 12px; }
     .terminal-footer { font-size: 9px; padding: 3px 0; }
     .sticker-header-title { font-size: 0.65rem; }
+    /* a minimised window flows with the stack instead of keeping its desktop coordinates */
+    .minimized-indicator { position: relative; display: inline-block; margin: 0 6px 6px 0; }
 }
 
 /* ═══════════════════════════════════════════

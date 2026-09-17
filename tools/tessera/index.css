@@ -648,3 +648,25 @@ textarea:focus {
     font-size: 0.6875rem;
     padding: 7px 12px;
 }
+
+/* Phone. Below 900px the sidebar and viewport stack into one scrolling
+   column, with the canvas pinned at the top while the controls below it
+   are worked. */
+@media (max-width: 900px) {
+    body { height: auto; min-height: 100vh; overflow: visible; display: block; }
+    .app-container { flex-direction: column; height: auto; }
+    .viewport {
+        order: -1; position: sticky; top: 0; z-index: 20;
+        height: auto; max-height: 55vh; max-height: 55dvh;
+        border-bottom: 1px solid var(--border-strong);
+    }
+    .viewport-header { height: auto; flex-wrap: wrap; gap: 8px 12px; padding: 10px 12px; }
+    .viewport-title { flex: 1 1 auto; }
+    .toggle-sidebar { display: none; }
+    .export-actions { flex-wrap: wrap; }
+    .canvas-container { padding: 12px; flex: 0 1 auto; min-height: 0; }
+    .viewport-footer { display: none; }
+    .sidebar { width: 100%; height: auto; border-right: 0; }
+    .sidebar-header { padding: 14px 16px; }
+    .sidebar-content { overflow: visible; padding: 16px; gap: 20px; }
+}

@@ -228,6 +228,10 @@ input[type=range]::-webkit-slider-thumb:hover{background:#fff;}
   .pbtn,.audio-btn,.mask-btn,.crazy-btn,.shuffle-btn{font-size:9px;padding:3px 8px;}
 }
 @media (max-width: 640px) {
+  /* keyboard hints and the subtitle have no place on a touch screen */
+  .top-keys,.top-info,.top-sep{display:none;}
+  .top-bar{gap:10px;padding:8px 12px;}
+  .logo span{display:none;}
   .main-row{flex-direction:column;}
   .panel{width:100%;max-height:35vh;overflow-y:auto;}
   .center-col{min-height:50vh;}
