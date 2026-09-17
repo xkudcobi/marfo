@@ -454,14 +454,14 @@ a{color:inherit;text-decoration:none}
           <p data-tr="Yazı, desen, poster ve ses işleri için sekiz tarayıcı tabanlı araç. Kurulum yok, hesap yok, ücret yok.">Eight browser based tools for type, pattern, poster and sound work. No install, no account, no cost.</p>
           <p data-tr="Bir aracı başlatmak için simgesine dokun. Her şey tarayıcında çalışır; işini font, SVG, PNG, video ya da MIDI olarak dışa aktar.">Tap an icon to launch a tool. Everything runs in your browser; export your work as font, SVG, PNG, video or MIDI.</p>
           <dl>
-            <dt>KINETIK</dt><dd data-tr="Kinetik yazı animatörü">Kinetic type animator</dd>
-            <dt>MOLTEN</dt><dd data-tr="Sıvı font üretici">Liquid font generator</dd>
-            <dt>HALO</dt><dd data-tr="Eriyen ve haleli yazı">Melt and halo type</dd>
-            <dt>TESSERA</dt><dd data-tr="Mozaik karo üretici">Mosaic tile generator</dd>
-            <dt>LATTICE</dt><dd data-tr="Desen üretici">Pattern generator</dd>
-            <dt>EMBER</dt><dd data-tr="Termal poster yapıcı">Thermal poster maker</dd>
-            <dt>STEPPER</dt><dd data-tr="Adım sekansörü">Step sequencer</dd>
-            <dt>PULSAR</dt><dd data-tr="VJ ses görselleştirici">VJ audio visualizer</dd>
+            <dt data-name="KINETIK">KINETIK</dt><dd data-tr="Kinetik yazı animatörü">Kinetic type animator</dd>
+            <dt data-name="MOLTEN">MOLTEN</dt><dd data-tr="Sıvı font üretici">Liquid font generator</dd>
+            <dt data-name="HALO">HALO</dt><dd data-tr="Eriyen ve haleli yazı">Melt and halo type</dd>
+            <dt data-name="TESSERA">TESSERA</dt><dd data-tr="Mozaik karo üretici">Mosaic tile generator</dd>
+            <dt data-name="LATTICE">LATTICE</dt><dd data-tr="Desen üretici">Pattern generator</dd>
+            <dt data-name="EMBER">EMBER</dt><dd data-tr="Termal poster yapıcı">Thermal poster maker</dd>
+            <dt data-name="STEPPER">STEPPER</dt><dd data-tr="Adım sekansörü">Step sequencer</dd>
+            <dt data-name="PULSAR">PULSAR</dt><dd data-tr="VJ ses görselleştirici">VJ audio visualizer</dd>
           </dl>
         </div>
         <div class="win-foot">
@@ -497,6 +497,11 @@ a{color:inherit;text-decoration:none}
     document.getElementById('aboutX').setAttribute('aria-label',l==='tr'?'Kapat':'Close');
     document.getElementById('langNow').setAttribute('aria-label',l==='tr'?'Dil: Türkçe. İngilizceye geç':'Language: English. Switch to Turkish');
     try{localStorage.setItem('marfo-lang',l);}catch(e){}
+    /* icon tooltips follow the About list */
+    Array.prototype.forEach.call(document.querySelectorAll('#grid .icon'),function(a){
+      var dd=document.querySelector('.win-body dt[data-name="'+a.getAttribute('data-name')+'"] + dd');
+      if(dd)a.title=dd.textContent;
+    });
   }
   var saved=null;
   try{saved=localStorage.getItem('marfo-lang');}catch(e){}
