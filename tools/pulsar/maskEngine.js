@@ -24,7 +24,7 @@ class MaskEngine {
         try {
             // Note: relies on window.SelfieSegmentation from CDN loaded in index.html
             this.segmentationModel = new SelfieSegmentation({locateFile: (file) => {
-                return `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`;
+                return `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1.1675465747/${file}`;
             }});
 
             this.segmentationModel.setOptions({

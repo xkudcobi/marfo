@@ -106,7 +106,7 @@ class HumanEngine {
             console.log('[HumanEngine] Initialising...');
             const cfg = {
                 backend: 'webgl',
-                modelBasePath: 'https://cdn.jsdelivr.net/npm/@vladmandic/human/models',
+                modelBasePath: 'https://cdn.jsdelivr.net/npm/@vladmandic/human@3.3.6/models',
                 face: {
                     enabled: true,
                     detector: { maxDetected: 1, rotation: true },

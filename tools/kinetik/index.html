@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com blob:; img-src 'self' blob: data:; media-src 'self' blob:; connect-src 'self' blob:;">
 <title>KINETIK — Kinetic Type Engine</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<meta name="description" content="KINETIK. Kinetic type animator. Stack words, pick a motion preset and export PNG, SVG, video or GIF.">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Bebas+Neue&family=Oswald:wght@700&family=Anton&family=Playfair+Display:wght@900&family=Righteous&family=Archivo+Black&family=Russo+One&family=Monoton&family=Rubik+Mono+One&family=Black+Ops+One&family=Bungee&family=Ultra&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -542,7 +544,7 @@ const motionPresets = {
   quantum: (t, i, n, I) => 1.0 + (Math.sin(t * 3.5 + i * 0.4) * Math.sin(t * 7.2 + i * 0.9) * 0.5) * I
 };
 
-let words = ['TYPO', 'MAN'];
+let words = ['KINE', 'TIK'];
 let wordColors = [null, null];
 let wordFonts = [null, null];
 let wordSkew = [0, 0];

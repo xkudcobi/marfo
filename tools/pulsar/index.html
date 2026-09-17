@@ -6,25 +6,27 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <title>PULSAR — VJ AUDIO VISUALIZER</title>
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+    <meta name="description" content="PULSAR. VJ audio visualizer. Microphone, MIDI, camera and body tracking drive live visuals.">
 
     <!-- Fonts — display=swap so text renders immediately, fonts load async -->
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;700;900&family=Rubik+Glitch&family=VT323&family=Space+Mono&family=Bungee&family=Roboto+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css?v=9">
 
     <!-- React PRODUCTION builds — ~2x faster parse + execution than dev builds -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
 
     <!-- Babel for in-browser JSX — must load synchronously before text/babel scripts -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.26.4/babel.min.js"></script>
 
     <!-- MIDI — async, not needed until user enables MIDI -->
     <script async src="https://cdn.jsdelivr.net/npm/webmidi@3.1.6/dist/iife/webmidi.iife.js"></script>
 
     <!-- ML Libraries — DEFERRED: huge files (~10MB) not needed until user clicks "Start Human AI"
          async prevents them from blocking the initial render and Babel compilation -->
-    <script async src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js" crossorigin="anonymous"></script>
-    <script async src="https://cdn.jsdelivr.net/npm/@vladmandic/human/dist/human.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1.1675465747/selfie_segmentation.js" crossorigin="anonymous"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/@vladmandic/human@3.3.6/dist/human.js"></script>
 </head>
 <body>
 

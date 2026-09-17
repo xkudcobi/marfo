@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" shape-rendering="crispEdges">
+        <path d="M12 4 H38 L48 14 V56 H12 Z" fill="#fff" stroke="#000" stroke-width="2"/>
+        <path d="M38 4 V14 H48" fill="#c0c0c0" stroke="#000" stroke-width="2"/>
+        <text x="15" y="34" font-family="Arial Black,Arial" font-weight="900" font-size="24" fill="#ff5500">M</text>
+        <path d="M18 33 v8 a2.5 2.5 0 0 1 -5 0 v-6 M27 33 v13 a2.5 2.5 0 0 1 -5 0 v-9 M37 33 v10 a2.5 2.5 0 0 1 -5 0 v-7" fill="#ff5500" stroke="#000" stroke-width="1.5" stroke-linejoin="round"/>
+        <circle cx="15.5" cy="47" r="2.5" fill="#ffaa00" stroke="#000" stroke-width="1.5"/>
+        <circle cx="34.5" cy="51" r="2" fill="#ffaa00" stroke="#000" stroke-width="1.5"/>
+      </svg>

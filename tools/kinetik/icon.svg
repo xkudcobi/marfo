@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" shape-rendering="crispEdges">
+        <rect x="6" y="14" width="48" height="32" fill="#c0c0c0" stroke="#000" stroke-width="2"/>
+        <rect x="6" y="14" width="48" height="5" fill="#000"/>
+        <rect x="6" y="41" width="48" height="5" fill="#000"/>
+        <g fill="#fff">
+          <rect x="10" y="15" width="4" height="3"/><rect x="18" y="15" width="4" height="3"/><rect x="26" y="15" width="4" height="3"/><rect x="34" y="15" width="4" height="3"/><rect x="42" y="15" width="4" height="3"/>
+          <rect x="10" y="42" width="4" height="3"/><rect x="18" y="42" width="4" height="3"/><rect x="26" y="42" width="4" height="3"/><rect x="34" y="42" width="4" height="3"/><rect x="42" y="42" width="4" height="3"/>
+        </g>
+        <rect x="10" y="21" width="40" height="18" fill="#fff" stroke="#000" stroke-width="1"/>
+        <text x="17" y="36" font-family="Arial Black,Arial" font-weight="900" font-size="18" fill="#808080">K</text>
+        <text x="24" y="36" font-family="Arial Black,Arial" font-weight="900" font-size="18" fill="#000080">K</text>
+        <text x="31" y="36" font-family="Arial Black,Arial" font-weight="900" font-size="18" fill="#ff0000">K</text>
+        <path d="M44 47 L52 52 L44 57 Z" fill="#ffff00" stroke="#000" stroke-width="1.5"/>
+      </svg>

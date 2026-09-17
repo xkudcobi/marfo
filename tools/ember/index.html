@@ -1,6 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>EMBER — Thermal Poster Maker</title>
+<meta name="description" content="EMBER. Generative thermal poster maker. Type, image or SVG run through a WebGL fluid feedback loop, exported as PNG.">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
 
 <!-- ══════════════════════════════════════════════════════════════════════════
      EMBER / ANALOG SCANNER ARTIFACTS   (v3.0 — fluid feedback pipeline)
@@ -370,6 +375,8 @@ input[type=color]::-moz-color-swatch{border:0}
   text-transform:uppercase;font-weight:var(--font-weight-bold);
 }
 </style>
+</head>
+<body>
 
 <div id="panel">
   <div class="brand">
@@ -404,7 +411,7 @@ const P = {
 
   // ── Content Source ──
   contentType:'text',       // 'text' | 'image' | 'svg'
-  title:"don't\nbe\na b*tch",
+  title:"don't\nlook\naway",
   fontSize:1.00,          // 1.0 = fitted to the margins; above that it bleeds past them
   tracking:-0.02,           // letter-spacing, as a multiple of the fitted size
   leading:0.86,             // line height, as a multiple of the fitted size
@@ -1844,7 +1851,7 @@ function drawHeroMask(W, H){
        can bleed past the margins. */
     const maxH   = Math.max(1, botLim - topLim);
 
-    const text = P.title.trim() || 'BURNT';
+    const text = P.title.trim() || 'EMBER';
     /* Tracking / leading / word spacing are all expressed as multiples of the
        fitted size, so they stay proportional at any export resolution. The
        auto-fit loop has to account for tracking too, otherwise wide tracking
@@ -3435,3 +3442,5 @@ document.addEventListener('keydown', e => {
 
 requestAnimationFrame(loop);
 </script>
+</body>
+</html>
