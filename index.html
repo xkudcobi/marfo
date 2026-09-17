@@ -187,6 +187,33 @@ a{color:inherit;text-decoration:none}
   border:1px solid;border-color:var(--shadow) var(--light) var(--light) var(--shadow);
 }
 
+/* ---------- DESKTOP: frameless, big 4x2 grid ---------- */
+@media (min-width:900px){
+  body{padding:0;align-items:stretch;min-height:100vh}
+  .phone{
+    max-width:none;height:100vh;max-height:none;
+    border:0;border-radius:0;box-shadow:none;
+  }
+  .status{padding:14px 28px 6px;font-size:14px}
+  .status .brand{font-size:16px;letter-spacing:2px}
+  .grid{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    grid-template-rows:repeat(2,1fr);
+    gap:24px 32px;
+    width:100%;max-width:1040px;margin:0 auto;
+    padding:24px 48px;
+  }
+  .icon svg{width:144px;height:144px}
+  .icon .lbl{font-size:16px;line-height:20px;margin-top:10px}
+  .dots{display:none}
+  .dock{padding:14px 28px 22px;justify-content:center;gap:64px}
+  .dock .icon{width:96px}
+  .dock .icon svg{width:64px;height:64px}
+  .dock .icon .lbl{font-size:12px;line-height:16px}
+  .win{max-width:440px}
+  .win-body .field{max-height:60vh}
+}
+
 @media (prefers-reduced-motion:no-preference){
   .win{animation:pop .12s steps(2) both}
   @keyframes pop{from{transform:scale(.96)}to{transform:scale(1)}}
